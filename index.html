@@ -1,0 +1,111 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style type="text/css">
+    body {
+        width: 100%;
+        height: 100%;
+    }
+    #phone {
+        width: 250px;
+        height: 500px;
+        background: #000;
+        border-radius: 10px;
+        padding: 20px 5px;
+    }
+
+    #screen {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        background: #FFF;
+        background: url("https://www.pixelstalk.net/wp-content/uploads/2016/06/Backgrounds-Phone-Wallpapers-HD-768x1365.jpg");
+        background-size: 100% 100%;
+    }
+
+    #notification-tray {
+        height: 15px;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .notification {
+        height: 100%;
+        width: auto;
+        color: #FFF !important;
+        padding: 1px;
+        font-size: 10px;
+        float: left;
+    }
+
+    .text-right .notification {
+        float: right !important;
+    }
+
+    .row {
+        width: 100% !important;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+
+    .row .col-xs-1,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-10,.col-xs-11,.col-xs-12 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .view {
+        height: calc(100% - 15px);
+        width: 100%;
+    }
+
+    /* Home View */
+    #home-tray {
+        position: absolute;
+        bottom: 0;
+        height: 100px;
+        width: 100%;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.5);
+    }
+</style>
+
+<body>
+    <div id="container" style="position: absolute; top: 100px; left: calc(50% - 125px)"><!-- Remove this for live -->
+        <div id="phone">
+            <div id="screen">
+                <div id="notification-tray">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="notification"><i class="fa fa-envelope"></i></div>
+                            <div class="notification"><i class="fa fa-envelope"></i></div>
+                            <div class="notification"><i class="fa fa-envelope"></i></div>
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <div class="notification">23%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="view" id="home">
+                    <div id="home-tray">
+                        <div class="row">
+                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
+                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
+                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
+                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Remove this for live -->
+</body>
+
+<script type="text/javascript">
+    $(document).ready( function() {
+
+    })
+</script>
