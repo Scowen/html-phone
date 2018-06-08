@@ -10,7 +10,10 @@
         width: 100%;
         height: 100%;
     }
+
     #phone {
+        position: absolute;
+        top: 10px;
         width: 250px;
         height: 500px;
         background: #000;
@@ -25,11 +28,14 @@
         background: #FFF;
         background: url("https://www.pixelstalk.net/wp-content/uploads/2016/06/Backgrounds-Phone-Wallpapers-HD-768x1365.jpg");
         background-size: 100% 100%;
+        overflow-x: hidden;
+        overflow-y: hidden;
     }
 
     #notification-tray {
+        position: absolute;
         height: 15px;
-        width: 100%;
+        width: calc(100% - 10px);
         background: rgba(0, 0, 0, 0.5);
     }
 
@@ -58,19 +64,45 @@
     }
 
     .view {
-        height: calc(100% - 15px);
+        position: absolute;
+        height: calc(100% - 40px);
+        width: calc(100% - 10px);
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .app-icon {
+        background: white;
+        height: 46px;
+        width: 46px;
+        border-radius: 28px;
+        margin: auto;
+    }
+
+    .app-text {
+        color: white;
+        text-shadow: 1px #000;
         width: 100%;
+        text-align: center;
+        font-size: 10px;
+        margin-top: 3px;
     }
 
     /* Home View */
+    #home-apps {
+        margin-top: 15px !important;
+        padding: 10px !important;
+        height: calc(100% - 100px);
+    }
+
     #home-tray {
-        position: absolute;
-        bottom: 0;
-        height: 100px;
+        height: 85px;
         width: 100%;
         padding: 10px;
         background: rgba(255, 255, 255, 0.5);
+        border-radius: 0px 0px 5px 5px;
     }
+
 </style>
 
 <body>
@@ -81,7 +113,7 @@
                     <div class="row">
                         <div class="col-xs-8">
                             <div class="notification"><i class="fa fa-envelope"></i></div>
-                            <div class="notification"><i class="fa fa-envelope"></i></div>
+                            <div class="notification"><i class="fa fa-info"></i></div>
                             <div class="notification"><i class="fa fa-envelope"></i></div>
                         </div>
                         <div class="col-xs-4 text-right">
@@ -90,12 +122,26 @@
                     </div>
                 </div>
                 <div class="view" id="home">
+                    <div id="home-apps">
+                        <div class="row">
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">GPS</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Conacts</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Mechanic</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
+                        </div>
+                        <div class="row" style="margin-top: 10px !important">
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
+                        </div>
+                    </div>
                     <div id="home-tray">
                         <div class="row">
-                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
-                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
-                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
-                            <div class="col-xs-3"><div style="background: red; height: 50px; width: 50px; border-radius: 25px"></div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Dialler</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Contacts</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Photos</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Snapmatic</div></div>
                         </div>
                     </div>
                 </div>
