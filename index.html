@@ -71,17 +71,30 @@
         overflow-y: hidden;
     }
 
+    .app {
+        padding-top: 10px;
+    }
+
+    .app.active {
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 5px;
+    }
+
+    .app.active .app-text {
+        color: #000 !important;
+    }
+
     .app-icon {
         background: white;
-        height: 46px;
-        width: 46px;
-        border-radius: 28px;
+        height: 40px;
+        width: 40px;
+        border-radius: 5px;
         margin: auto;
+        background-size: 100% 100% !important;
     }
 
     .app-text {
         color: white;
-        text-shadow: 1px #000;
         width: 100%;
         text-align: center;
         font-size: 10px;
@@ -98,8 +111,8 @@
     #home-tray {
         height: 85px;
         width: 100%;
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.5);
+        padding: 15px 10px;
+        background: rgba(255, 255, 255, 0.3);
         border-radius: 0px 0px 5px 5px;
     }
 
@@ -124,24 +137,19 @@
                 <div class="view" id="home">
                     <div id="home-apps">
                         <div class="row">
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">GPS</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Conacts</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Mechanic</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
+                            <div class="col-xs-3 app active"><div class="app-icon" style="background: url('images/gps.png')"></div><div class="app-text">GPS</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/mechanic.png')"></div><div class="app-text">Mechanic</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/taxi.jpg')"></div><div class="app-text">Taxi</div></div>
                         </div>
                         <div class="row" style="margin-top: 10px !important">
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Name</div></div>
                         </div>
                     </div>
                     <div id="home-tray">
                         <div class="row">
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Dialler</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Contacts</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Photos</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon"></div><div class="app-text">Snapmatic</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/dialler.png')"></div><div class="app-text">Dialler</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/contacts.jpg')"></div><div class="app-text">Contacts</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/messages.png')"></div><div class="app-text">Messages</div></div>
+                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/camera.png')"></div><div class="app-text">Snapmatic</div></div>
                         </div>
                     </div>
                 </div>
@@ -151,6 +159,49 @@
 </body>
 
 <script type="text/javascript">
+    var active = 0;
+
+    function moveActive(positions) {
+        let apps = $(".app");
+
+        let newPosition = active + positions;
+
+        if (newPosition < 0 || newPosition >= apps.length)
+            return;
+        
+        console.log(`Active: ${active}`, `Positions: ${positions}`, `New Position: ${newPosition}`);
+
+        $(".app").removeClass("active");
+        $(apps[newPosition]).addClass("active");
+        active = newPosition;
+
+    }
+
+    $(document).keyup( function(e) {
+        let key = e.which;
+        console.log(key);
+
+        if (key == 98) { // Numpad 2
+            moveActive(4);
+        }
+
+        if (key == 100) { // Numpad 4
+            moveActive(-1);
+        }
+
+        if (key == 102) { // Numpad 6
+            moveActive(1);
+        }
+
+        if (key == 104) { // Numpad 8
+            moveActive(-4);
+        }
+
+        if (key == 103) { // Numpad 5
+
+        }
+    })
+
     $(document).ready( function() {
 
     })
