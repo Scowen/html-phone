@@ -111,7 +111,7 @@
     #home-tray {
         height: 85px;
         width: 100%;
-        padding: 15px 10px;
+        padding: 10px 10px;
         background: rgba(255, 255, 255, 0.3);
         border-radius: 0px 0px 5px 5px;
     }
@@ -137,19 +137,20 @@
                 <div class="view" id="home">
                     <div id="home-apps">
                         <div class="row">
-                            <div class="col-xs-3 app active"><div class="app-icon" style="background: url('images/gps.png')"></div><div class="app-text">GPS</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/mechanic.png')"></div><div class="app-text">Mechanic</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/taxi.jpg')"></div><div class="app-text">Taxi</div></div>
+                            <div class="col-xs-3 app active" data-target="gps"><div class="app-icon" style="background: url('images/gps.png')"></div><div class="app-text">GPS</div></div>
+                            <div class="col-xs-3 app" data-target="mechanic"><div class="app-icon" style="background: url('images/mechanic.png')"></div><div class="app-text">Mechanic</div></div>
+                            <div class="col-xs-3 app" data-target="taxi"><div class="app-icon" style="background: url('images/taxi.jpg')"></div><div class="app-text">DCC</div></div>
+                            <div class="col-xs-3 app"></div>
                         </div>
                         <div class="row" style="margin-top: 10px !important">
                         </div>
                     </div>
                     <div id="home-tray">
                         <div class="row">
-                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/dialler.png')"></div><div class="app-text">Dialler</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/contacts.jpg')"></div><div class="app-text">Contacts</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/messages.png')"></div><div class="app-text">Messages</div></div>
-                            <div class="col-xs-3 app"><div class="app-icon" style="background: url('images/camera.png')"></div><div class="app-text">Snapmatic</div></div>
+                            <div class="col-xs-3 app" data-target="dialler"><div class="app-icon" style="background: url('images/dialler.png')"></div><div class="app-text">Dialler</div></div>
+                            <div class="col-xs-3 app" data-target="contacts"><div class="app-icon" style="background: url('images/contacts.jpg')"></div><div class="app-text">Contacts</div></div>
+                            <div class="col-xs-3 app" data-target="messages"><div class="app-icon" style="background: url('images/messages.png')"></div><div class="app-text">Messages</div></div>
+                            <div class="col-xs-3 app" data-target="camera"><div class="app-icon" style="background: url('images/camera.png')"></div><div class="app-text">Snapmatic</div></div>
                         </div>
                     </div>
                 </div>
@@ -160,8 +161,12 @@
 
 <script type="text/javascript">
     var active = 0;
+    var view = "home";
 
     function moveActive(positions) {
+        if (view != "home")
+            return;
+
         let apps = $(".app");
 
         let newPosition = active + positions;
@@ -169,6 +174,13 @@
         if (newPosition < 0 || newPosition >= apps.length)
             return;
         
+        if ($(apps[newPosition]).html() == "") {
+            active = newPosition;
+            if (positions < 0) moveActive(-1);
+            else moveActive(1);
+            return;
+        }
+
         console.log(`Active: ${active}`, `Positions: ${positions}`, `New Position: ${newPosition}`);
 
         $(".app").removeClass("active");
@@ -203,6 +215,17 @@
     })
 
     $(document).ready( function() {
+        $(".app").click( function() {
+            $(".app").removeClass("active");
+            $(this).addClass("active");
+            let target = $(this).attr("data-target");
 
+            $.each($(".app"), function(index, value) {
+                if (target == $(value).attr("data-target"))
+                    active = index;
+            })
+
+            console.log(active);
+        })
     })
 </script>
