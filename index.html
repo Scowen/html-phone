@@ -160,6 +160,11 @@
         border-radius: 0px 0px 5px 5px;
     }
 
+    /* GPS View */
+    tr.active td {
+        background: #4e91ff !important;
+        color: white !important;
+    }
 </style>
 
 <body>
@@ -256,6 +261,7 @@
 <script type="text/javascript">
     var active = 0;
     var view = "#home";
+    var activeGps = 0;
 
     var gpsLocations = [
         "Mors Insurance",
@@ -273,7 +279,7 @@
         "DMV",
     ];
 
-    function moveActive(positions) {
+    function moveActiveHomeApp(positions) {
         if (view != "#home")
             return;
 
@@ -286,8 +292,8 @@
         
         if ($(apps[newPosition]).html() == "") {
             active = newPosition;
-            if (positions < 0) moveActive(-1);
-            else moveActive(1);
+            if (positions < 0) moveActiveHomeApp(-1);
+            else moveActiveHomeApp(1);
             return;
         }
 
@@ -298,7 +304,32 @@
         active = newPosition;
     }
 
-    function selectApp() {
+    function moveActiveGpsRow(positions) {
+        if (view != "#gps")
+            return;
+
+        let gpsRows = $(".gps-location");
+
+        let newPosition = activeGps + positions;
+
+        if (newPosition < 0 || newPosition >= gpsRows.length)
+            return;
+        
+        if ($(gpsRows[newPosition]).html() == "") {
+            activeGps = newPosition;
+            if (positions < 0) moveActiveHomeApp(-1);
+            else moveActiveHomeApp(1);
+            return;
+        }
+
+        console.log(`Active GPS: ${activeGps}`, `Positions: ${positions}`, `New Position: ${newPosition}`);
+
+        $(".gps-location").removeClass("active");
+        $(gpsRows[newPosition]).addClass("active");
+        activeGps = newPosition;
+    }
+
+    function selectActiveHomeApp() {
         if (view != "#home")
             return;
 
@@ -313,28 +344,42 @@
         view = target;
     }
 
+    function selectActiveGpsLocation() {
+        if (view != "#gps")
+            return;
+
+        let gpsRows = $(".gps-location");
+        let id = $(gpsRows[activeGps]).attr("data-id");
+
+        if (!id || id == null || id == "undefined")
+            return;
+    }
+
     $(document).keyup( function(e) {
         let key = e.which;
         console.log(key);
 
         if (key == 98) { // Numpad 2
-            moveActive(4);
+            moveActiveHomeApp(4);
+            moveActiveGpsRow(1);
         }
 
         if (key == 100) { // Numpad 4
-            moveActive(-1);
+            moveActiveHomeApp(-1);
         }
 
         if (key == 102) { // Numpad 6
-            moveActive(1);
+            moveActiveHomeApp(1);
         }
 
         if (key == 104) { // Numpad 8
-            moveActive(-4);
+            moveActiveHomeApp(-4);
+            moveActiveGpsRow(-1);
         }
 
         if (key == 13) { // Enter
-            selectApp();
+            selectActiveHomeApp();
+            selectActiveGpsLocation();
         }
 
         if (key == 8) { // Backspace
@@ -350,7 +395,7 @@
     $(document).ready( function() {
         $(".app").click( function() {
             if ($(this).hasClass("active")) {
-                selectApp();
+                selectActiveHomeApp();
                 return;
             }
 
@@ -383,12 +428,15 @@
 
         $.each(gpsLocations, function(index, value) {
             $("#table-gps-locations tbody").append(`
-                <tr>
+                <tr data-id=${index} class="gps-location">
                     <td>${value}</td>
                     <td class="text-right td-icon"><i class="fa fa-star-o"></i></td>
                 </tr>
             `);
         })
+
+        let gpsRows = $("#table-gps-locations tbody tr");
+        $(gpsRows[0]).addClass("active");
 
         $(".content").slimScroll({
             height: 'calc(100% -10px)'
