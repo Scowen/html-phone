@@ -2,9 +2,11 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 
@@ -13,7 +15,7 @@
         width: 100%;
         height: 100%;
         font-family: 'Roboto';
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .content {
@@ -131,28 +133,37 @@
     .title-bar {
         background: white;
         color: black;
-        padding: 5px !important;
-        padding-top: 20px !important;
+        padding: 7px !important;
+        padding-top: 22px !important;
+        height: 47px;
     }
 
     .title-btn {
-        padding: 3px;
+        padding: 2px;
         padding-right: 5px;
         font-size: 14px;
     }
 
     .title {
-        font-weight: bold
+        font-weight: bold;
+    }
+
+    .text-dark {
+        color: #333 !important;
+    }
+
+    .text-dark .fa {
+        color: #333 !important;
     }
 
     /* Home View */
-    #home-apps {
+    #home #home-apps {
         margin-top: 15px !important;
         padding: 10px !important;
         height: calc(100% - 100px);
     }
 
-    #home-tray {
+    #home #home-tray {
         height: 85px;
         width: 100%;
         padding: 10px 10px;
@@ -161,9 +172,54 @@
     }
 
     /* GPS View */
-    tr.active td {
+    #gps tr.active td {
         background: #4e91ff !important;
         color: white !important;
+    }
+
+    /* Taxi View*/
+    #taxi #taxi-action-area {
+        height: 250px;
+        width: 100%;
+    }
+
+    #taxi #btn-request-taxi {
+        height: 150px;
+        width: 150px;
+        border-radius: 75px;
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 1.5em;
+        padding-top: 50px;
+        text-transform: uppercase;
+    }
+
+    #taxi #btn-request-taxi small {
+        font-size: 0.6em;
+        font-weight: normal;
+    }
+
+    #taxi #taxi-drivers-available-number {
+        font-size: 5em;
+    }
+
+    #taxi #taxi-drivers-available-text {
+        font-size: 0.9em;
+        text-transform: uppercase;
+    }
+
+    #taxi #taxi-select-vehicle {
+        display: none;
+    }
+
+    #taxi .btn-select-taxi {
+        width: 200px;
+        margin-top: 3px;
+    }
+
+    #taxi #taxi-ordered {
+        display: none;
+        padding-top: 40px
     }
 </style>
 
@@ -187,9 +243,10 @@
                     <div id="home-apps">
                         <div class="row">
                             <div class="col-xs-3 app active" data-target="#gps"><div class="app-icon" style="background: url('images/gps.png')"></div><div class="app-text">GPS</div></div>
-                            <div class="col-xs-3 app" data-target="#mechanic"><div class="app-icon" style="background: url('images/mechanic.png')"></div><div class="app-text">Mechanic</div></div>
-                            <div class="col-xs-3 app" data-target="#taxi"><div class="app-icon" style="background: url('images/taxi.jpg')"></div><div class="app-text">DCC</div></div>
+                            <div class="col-xs-3 app" data-target="#taxi"><div class="app-icon" style="background: url('images/taxi.jpg')"></div><div class="app-text">Taxi</div></div>
+                            <!-- <div class="col-xs-3 app" data-target="#mechanic"><div class="app-icon" style="background: url('images/mechanic.png')"></div><div class="app-text">Mechanic</div></div> -->
                             <div class="col-xs-3 app" data-target="#help"><div class="app-icon" style="background: url('images/help.png')"></div><div class="app-text">Help</div></div>
+                            <div class="col-xs-3 app"></div>
                         </div>
                     </div>
                     <div id="home-tray">
@@ -205,13 +262,43 @@
                 <div class="view" id="gps">
                     <div class="row title-bar" style="background: #a44cf2">
                         <div class="col-xs-1 title-btn"><a href="#" class="btn-target" data-target="#home" style="color: white !important"><i class="fa fa-arrow-left"></i></a></div>
-                        <div class="col-xs-5 title" style="color: white;">GPS</div>
-                        <div class="col-xs-5"></div>
+                        <div class="col-xs-11 title" style="color: white;">GPS</div>
                     </div>
                     <div class="content no-padding">
                         <table class="table" id="table-gps-locations">
                             <tbody></tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="view" id="taxi">
+                    <div class="row title-bar" style="background: #fdb81b">
+                        <div class="col-xs-1 title-btn text-dark"><a href="#" class="btn-target" data-target="#home" style="color: white !important"><i class="fa fa-arrow-left"></i></a></div>
+                        <div class="col-xs-11 title text-dark" style="color: white;">Downtown Cab Co.</div>
+                    </div>
+                    <div class="content text-center">
+                        <div id="taxi-action-area">
+                            <a href="#" class="btn btn-danger" id="btn-request-taxi">REQUEST<br /><small>Press 5</small></a>
+                            <div id="taxi-select-vehicle">
+                                <strong>SELECT A VEHICLE</strong>
+                                <a href="#" data-id="0" class="btn btn-primary btn-flat btn-select-taxi">Cab</a><br />
+                                <a href="#" data-id="1" class="btn btn-default btn-flat btn-select-taxi">Super Diamond</a><br />
+                                <a href="#" data-id="2" class="btn btn-default btn-flat btn-select-taxi">Shuttle</a><br />
+                                <a href="#" data-id="3" class="btn btn-default btn-flat btn-select-taxi">Stretch</a><br />
+                            </div>
+                            <div id="taxi-ordered">
+                                <strong>TAXI ORDERED</strong>
+                                <br />
+                                <span id="taxi-ordered-type"></span>
+                                <br /><br />
+                                <a href="#" id="btn-taxi-back-to-main" class="btn btn-success">Back</a>
+                            </div>
+                        </div>
+                        <div id="taxi-drivers-available">
+                            <strong id="taxi-drivers-available-number">7</strong>
+                            <br />
+                            <span id="taxi-drivers-available-text">DRIVERS AVAILABLE</span>
+                        </div>
                     </div>
                 </div>
 
@@ -225,30 +312,12 @@
                         <h4 style="padding-left: 10px">CONTROLS</h4>
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td><strong>Numpad 2</strong></td>
-                                    <td>DOWN</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Numpad 4</strong></td>
-                                    <td>LEFT</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Numpad 6</strong></td>
-                                    <td>RIGHT</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Numpad 8</strong></td>
-                                    <td>UP</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Enter</strong></td>
-                                    <td>Proceed / Select</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Backspace</strong></td>
-                                    <td>Back to Home</td>
-                                </tr>
+                                <tr><td><strong>Numpad 2</strong></td> <td>DOWN</td></tr>
+                                <tr><td><strong>Numpad 4</strong></td> <td>LEFT</td></tr>
+                                <tr><td><strong>Numpad 6</strong></td> <td>RIGHT</td></tr>
+                                <tr><td><strong>Numpad 8</strong></td> <td>UP</td></tr>
+                                <tr><td><strong>Enter</strong></td> <td>Proceed / Select</td></tr>
+                                <tr><td><strong>Backspace</strong></td> <td>Back to Home</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -262,6 +331,34 @@
     var active = 0;
     var view = "#home";
     var activeGps = 0;
+    var activeTaxi = 0;
+
+    $.fn.extend({
+      animateCss: function(animationName, callback) {
+        var animationEnd = (function(el) {
+          var animations = {
+            animation: 'animationend',
+            OAnimation: 'oAnimationEnd',
+            MozAnimation: 'mozAnimationEnd',
+            WebkitAnimation: 'webkitAnimationEnd',
+          };
+
+          for (var t in animations) {
+            if (el.style[t] !== undefined) {
+              return animations[t];
+            }
+          }
+        })(document.createElement('div'));
+
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+          $(this).removeClass('animated ' + animationName);
+
+          if (typeof callback === 'function') callback();
+        });
+
+        return this;
+      },
+    });
 
     var gpsLocations = [
         "Mors Insurance",
@@ -315,18 +412,29 @@
         if (newPosition < 0 || newPosition >= gpsRows.length)
             return;
         
-        if ($(gpsRows[newPosition]).html() == "") {
-            activeGps = newPosition;
-            if (positions < 0) moveActiveHomeApp(-1);
-            else moveActiveHomeApp(1);
-            return;
-        }
-
         console.log(`Active GPS: ${activeGps}`, `Positions: ${positions}`, `New Position: ${newPosition}`);
 
         $(".gps-location").removeClass("active");
         $(gpsRows[newPosition]).addClass("active");
         activeGps = newPosition;
+    }
+
+    function moveActiveTaxiRow(positions) {
+        if (view != "#taxi-select")
+            return;
+
+        let taxiVehicles = $(".btn-select-taxi");
+
+        let newPosition = activeTaxi + positions;
+
+        if (newPosition < 0 || newPosition >= taxiVehicles.length)
+            return;
+        
+        console.log(`Active Taxi: ${activeTaxi}`, `Positions: ${positions}`, `New Position: ${newPosition}`);
+
+        $(".btn-select-taxi").removeClass("btn-primary").addClass("btn-default");
+        $(taxiVehicles[newPosition]).addClass("btn-primary").removeClass("btn-default");
+        activeTaxi = newPosition;
     }
 
     function selectActiveHomeApp() {
@@ -342,6 +450,8 @@
         $(".view").fadeOut(200);
         $(target).fadeIn(200);
         view = target;
+    
+        console.log("selectActiveHomeApp", active, target);
     }
 
     function selectActiveGpsLocation() {
@@ -353,6 +463,48 @@
 
         if (!id || id == null || id == "undefined")
             return;
+
+        console.log("selectActiveGpsLocation", activeGps, id);
+    }
+
+    function selectActiveTaxiVehicle() {
+        if (view != "#taxi-select")
+            return;
+
+        let taxiVehicles = $(".btn-select-taxi");
+        let id = $(taxiVehicles[activeTaxi]).attr("data-id");
+
+        if (!id || id == null || id == "undefined")
+            return;
+
+        $("#taxi-select-vehicle a").animateCss("animated lightSpeedOut", function() {
+            $("#taxi-select-vehicle").hide();
+            $("#taxi-ordered-type").text($(taxiVehicles[activeTaxi]).text());
+            $("#taxi-ordered").animateCss("animated zoomIn").show();
+        });
+
+        view = "#taxi-select-ordered";
+
+        console.log("selectActiveTaxiVehicle", activeTaxi, id);
+    }
+
+    function requestTaxi() {
+        if (view != "#taxi")
+            return;
+
+        $("#btn-request-taxi").animateCss("animated zoomOutUp", function() {
+            $("#btn-request-taxi").hide()
+            $("#taxi-select-vehicle").fadeIn();
+            $("#taxi-select-vehicle a").animateCss("animated lightSpeedIn");
+        })
+
+        view = "#taxi-select";
+    }
+     
+    function resetTaxi() {
+        $("#taxi-select-vehicle").hide();
+        $("#taxi-ordered").hide();
+        $("#btn-request-taxi").show();
     }
 
     $(document).keyup( function(e) {
@@ -362,10 +514,15 @@
         if (key == 98) { // Numpad 2
             moveActiveHomeApp(4);
             moveActiveGpsRow(1);
+            moveActiveTaxiRow(1);
         }
 
         if (key == 100) { // Numpad 4
             moveActiveHomeApp(-1);
+        }
+
+        if (key == 101) { // Numpad 4
+            requestTaxi();
         }
 
         if (key == 102) { // Numpad 6
@@ -375,11 +532,13 @@
         if (key == 104) { // Numpad 8
             moveActiveHomeApp(-4);
             moveActiveGpsRow(-1);
+            moveActiveTaxiRow(-1);
         }
 
         if (key == 13) { // Enter
             selectActiveHomeApp();
             selectActiveGpsLocation();
+            selectActiveTaxiVehicle();
         }
 
         if (key == 8) { // Backspace
@@ -387,7 +546,10 @@
                 return; 
 
             $(".view").fadeOut(200);
-            $("#home").fadeIn(200);
+            $("#home").fadeIn(200, function() {
+                resetTaxi();
+            });
+
             view = "#home";
         }
     })
@@ -415,8 +577,12 @@
             if (!target || target == null || target == "undefined")
                 return;
 
+
             $(".view").fadeOut(200);
-            $(target).fadeIn(200);
+            $(target).fadeIn(200, function() {
+                resetTaxi();
+            });
+
             view = target;
         })
 
@@ -430,7 +596,7 @@
             $("#table-gps-locations tbody").append(`
                 <tr data-id=${index} class="gps-location">
                     <td>${value}</td>
-                    <td class="text-right td-icon"><i class="fa fa-star-o"></i></td>
+                    <td class="text-right td-icon"><!--<i class="fa fa-star-o"></i>--></td>
                 </tr>
             `);
         })
@@ -438,8 +604,40 @@
         let gpsRows = $("#table-gps-locations tbody tr");
         $(gpsRows[0]).addClass("active");
 
+        $(".gps-location").click( function() {
+            if ($(this).hasClass("active")) {
+                selectActiveGpsLocation();
+                return;
+            }
+
+            $(".gps-location").removeClass("active");
+            $(this).addClass("active");
+            let id = $(this).attr("data-id");
+
+            $.each($(".gps-location"), function(index, value) {
+                if (id == $(value).attr("data-id"))
+                    activeGps = index;
+            })
+        });
+
+        $("#btn-request-taxi").click(requestTaxi);
+        $(".btn-select-taxi").click(selectActiveTaxiVehicle);
+        $("#btn-taxi-back-to-main").click(function() {
+            resetTaxi();
+
+            view = "#taxi";
+        });
+
         $(".content").slimScroll({
             height: 'calc(100% -10px)'
         });
+
+        setInterval(function() {
+            // Make a call to the server to ask how many drivers are available.
+            // Math.floor(Math.random() * (max - min + 1)) + min;
+            let random = Math.floor(Math.random() * (15 - 7 + 1)) + 7;
+            $("#taxi-drivers-available-number").text(random);
+        }, 5000);
+
     })
 </script>
